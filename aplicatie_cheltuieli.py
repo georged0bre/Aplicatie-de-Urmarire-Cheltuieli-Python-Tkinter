@@ -6,22 +6,22 @@ from datetime import date
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
-# Fișierul unde sunt salvate cheltuielile
+# fisierul unde sunt salvate cheltuielile
 FIȘIER = "cheltuieli.json"
 
-# Funcția care încarcă cheltuielile din fișier
+# functia care încarcă cheltuielile din fișier
 def incarca_cheltuieli():
     if os.path.exists(FIȘIER):
         with open(FIȘIER, 'r') as f:
             return json.load(f)
     return []
 
-# Funcția care salvează cheltuielile în fișier
+# functia care salvează cheltuielile în fișier
 def salveaza_cheltuieli(cheltuieli):
     with open(FIȘIER, 'w') as f:
         json.dump(cheltuieli, f, indent=4)
 
-# Funcția care adaugă o cheltuială
+# functia care adaugă o cheltuială
 def adauga_cheltuiala(suma, categorie, descriere):
     cheltuieli = incarca_cheltuieli()
     cheltuieli.append({
@@ -32,7 +32,7 @@ def adauga_cheltuiala(suma, categorie, descriere):
     })
     salveaza_cheltuieli(cheltuieli)
 
-# Funcția care afișează graficul cheltuielilor pe categorii
+# functia care afișează graficul cheltuielilor pe categorii
 def arata_grafic_cheltuieli():
     cheltuieli = incarca_cheltuieli()
     date = defaultdict(float)
@@ -47,7 +47,7 @@ def arata_grafic_cheltuieli():
     plt.ylabel("Suma")
     plt.show()
 
-# Funcția care se execută atunci când adaugi o cheltuială
+# functia care se execută atunci când adaugi o cheltuială
 def trimite():
     try:
         suma = float(entry_suma.get())
@@ -60,30 +60,30 @@ def trimite():
     except ValueError:
         messagebox.showerror("Eroare", "Sumă invalidă!")
 
-# Interfața grafică
+# interfata grafica
 fereastra = tk.Tk()
 fereastra.title("Aplicație de Urmărire Cheltuieli")
 fereastra.geometry("300x300")
 
-# Eticheta și câmpul pentru sumă
+# eticheta si campul pentru suma
 tk.Label(fereastra, text="Sumă").pack(pady=2)
 entry_suma = tk.Entry(fereastra)
 entry_suma.pack()
 
-# Eticheta și lista derulantă pentru categorie
+# eticheta si lista derulanta pentru categorie
 tk.Label(fereastra, text="Categorie").pack(pady=2)
 combo_categorie = ttk.Combobox(fereastra, values=["Mâncare", "Transport", "Utilități", "Distracție", "Altele"])
 combo_categorie.pack()
 combo_categorie.set("Mâncare")
 
-# Eticheta și câmpul pentru descriere
+# eticheta și campul pentru descriere
 tk.Label(fereastra, text="Descriere").pack(pady=2)
 entry_descriere = tk.Entry(fereastra)
 entry_descriere.pack()
 
-# Butonul pentru a adăuga cheltuiala
+# butonul pentru a adauga cheltuiala
 tk.Button(fereastra, text="Adaugă Cheltuială", command=trimite).pack(pady=5)
-# Butonul pentru a arăta graficul
+# butonul pentru a arata graficul
 tk.Button(fereastra, text="Arată Grafic", command=arata_grafic_cheltuieli).pack(pady=5)
 
 fereastra.mainloop()
